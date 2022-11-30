@@ -73,7 +73,9 @@ public interface GraphMapper {
      * @throws NebulaException nebula异常
      * @throws NotValidConnectionException 连接异常
      */
-    public int executeBatchUpdateSql(String space, List<String> sqlList) throws NebulaException, NotValidConnectionException, ClientServerIncompatibleException, AuthFailedException, IOErrorException;
+    public int executeBatchUpdateSql(String space, List<String> sqlList)
+            throws NebulaException, NotValidConnectionException,
+            ClientServerIncompatibleException, AuthFailedException, IOErrorException;
 
 
     /**
@@ -85,7 +87,9 @@ public interface GraphMapper {
      * @throws NebulaException nebula异常
      * @throws NotValidConnectionException 连接异常
      */
-    public int executeUpdateSql(String space, String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException;
+    public int executeUpdateSql(String space, String sql)
+            throws NebulaException, NotValidConnectionException, IOErrorException,
+            ClientServerIncompatibleException, AuthFailedException;
 
 
     /**
@@ -128,7 +132,8 @@ public interface GraphMapper {
      * @return 查询的实体列表
      * @throws NebulaException nebula异常
      */
-    public <T> List<T> executeQuerySql(String sql, Class<T> clazz) throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    public <T> List<T> executeQuerySql(String sql, Class<T> clazz)
+            throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**

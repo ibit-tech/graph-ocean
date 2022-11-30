@@ -40,11 +40,11 @@ public class NebulaBatchEdgesUpdate<S, T, E> implements EdgeUpdateEngine<S, T, E
      */
     private boolean isOnlyGenerateEdgeSql = true;
 
-    private List<GraphEdgeEntity<S, T, E>> graphEdgeEntities;
+    private final List<GraphEdgeEntity<S, T, E>> graphEdgeEntities;
 
-    private GraphVertexType<S> srcGraphVertexType;
+    private final GraphVertexType<S> srcGraphVertexType;
 
-    private GraphVertexType<T> dstGraphVertexType;
+    private final GraphVertexType<T> dstGraphVertexType;
 
     private List<GraphVertexEntity<S>> srcGraphVertexEntities;
 
@@ -72,7 +72,8 @@ public class NebulaBatchEdgesUpdate<S, T, E> implements EdgeUpdateEngine<S, T, E
 
     private List<String> getDstVertexSql() throws NebulaException {
         if (CollectionUtils.isNotEmpty(dstGraphVertexEntities)) {
-            NebulaBatchVertexUpdate nebulaUpdateBatchVertex = new NebulaBatchVertexUpdate(dstGraphVertexEntities);
+            NebulaBatchVertexUpdate<T> nebulaUpdateBatchVertex = new NebulaBatchVertexUpdate<>(
+                    dstGraphVertexEntities);
             return nebulaUpdateBatchVertex.getSqlList();
         }
         return Collections.emptyList();
@@ -80,7 +81,8 @@ public class NebulaBatchEdgesUpdate<S, T, E> implements EdgeUpdateEngine<S, T, E
 
     private List<String> getSrcVertexSql() throws NebulaException {
         if (CollectionUtils.isNotEmpty(this.srcGraphVertexEntities)) {
-            NebulaBatchVertexUpdate nebulaUpdateBatchVertex = new NebulaBatchVertexUpdate(this.srcGraphVertexEntities);
+            NebulaBatchVertexUpdate<S> nebulaUpdateBatchVertex = new NebulaBatchVertexUpdate<>(
+                    this.srcGraphVertexEntities);
             return nebulaUpdateBatchVertex.getSqlList();
         }
         return Collections.emptyList();

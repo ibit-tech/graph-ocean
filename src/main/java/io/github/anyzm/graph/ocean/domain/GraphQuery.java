@@ -21,7 +21,7 @@ public interface GraphQuery {
      *
      * @return sql
      */
-    public String buildSql();
+    String buildSql();
 
     /**
      * 连接两个查询片段
@@ -29,7 +29,7 @@ public interface GraphQuery {
      * @param graphQuery 另一个查询API
      * @return 查询API
      */
-    public GraphQuery connectAdd(GraphQuery graphQuery);
+    GraphQuery connectAdd(GraphQuery graphQuery);
 
     /**
      * limit
@@ -37,7 +37,7 @@ public interface GraphQuery {
      * @param size 条数
      * @return 查询API
      */
-    public GraphQuery limit(int size);
+    GraphQuery limit(int size);
 
     /**
      * limit
@@ -45,20 +45,20 @@ public interface GraphQuery {
      * @param size 条数
      * @return 查询API
      */
-    public GraphQuery limit(int offset, int size);
+    GraphQuery limit(int offset, int size);
 
 
     /**
      * 去重
      * @return 查询API
      */
-    public GraphQuery distinct();
+    GraphQuery distinct();
 
     /**
      * 添加yield关键字
      * @return 查询API
      */
-    public GraphQuery yield();
+    GraphQuery yield();
 
 
     /**
@@ -67,7 +67,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yield(Class clazz, String... fields);
+    GraphQuery yield(Class clazz, String... fields);
 
 
     /**
@@ -78,7 +78,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yield(String symbol, Class clazz, String... fields);
+    GraphQuery yield(String symbol, Class clazz, String... fields);
 
 
     /**
@@ -87,7 +87,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yield(String... fields);
+    GraphQuery yield(String... fields);
 
 
     /**
@@ -96,7 +96,7 @@ public interface GraphQuery {
      * @param fieldAlias 字段与别名映射
      * @return 查询API
      */
-    public GraphQuery yield(Map<String, String> fieldAlias);
+    GraphQuery yield(Map<String, String> fieldAlias);
 
 
     /**
@@ -106,7 +106,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yieldDistinct(Class clazz, String... fields);
+    GraphQuery yieldDistinct(Class clazz, String... fields);
 
 
     /**
@@ -117,7 +117,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yieldDistinct(String prefix, Class clazz, String... fields);
+    GraphQuery yieldDistinct(String prefix, Class clazz, String... fields);
 
 
     /**
@@ -126,7 +126,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery yieldDistinct(String... fields);
+    GraphQuery yieldDistinct(String... fields);
 
 
     /**
@@ -135,7 +135,7 @@ public interface GraphQuery {
      * @param fieldAlias 字段与别名映射
      * @return 查询API
      */
-    public GraphQuery yieldDistinct(Map<String, String> fieldAlias);
+    GraphQuery yieldDistinct(Map<String, String> fieldAlias);
 
 
     /**
@@ -143,7 +143,7 @@ public interface GraphQuery {
      *
      * @return 查询API
      */
-    public GraphQuery pipe();
+    GraphQuery pipe();
 
     /**
      * 连接两个查询结果，查询列和列名需要一一对应
@@ -151,7 +151,7 @@ public interface GraphQuery {
      * @param graphQuery
      * @return
      */
-    public GraphQuery unionAll(GraphQuery graphQuery);
+    GraphQuery unionAll(GraphQuery graphQuery);
 
     /**
      * 连接两个查询结果，查询列和列名需要一一对应，会去除重复结果
@@ -159,7 +159,7 @@ public interface GraphQuery {
      * @param graphQuery 查询API
      * @return 查询API
      */
-    public GraphQuery union(GraphQuery graphQuery);
+    GraphQuery union(GraphQuery graphQuery);
 
     /**
      * 根据某些属性分组查询
@@ -168,7 +168,7 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery groupBy(Class clazz, String... fields);
+    GraphQuery groupBy(Class clazz, String... fields);
 
 
     /**
@@ -177,14 +177,14 @@ public interface GraphQuery {
      * @param fields 字段
      * @return 查询API
      */
-    public GraphQuery groupBy(String... fields);
+    GraphQuery groupBy(String... fields);
 
     /**
      * count(*)
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery countComma(String alias);
+    GraphQuery countComma(String alias);
 
 
     /**
@@ -194,7 +194,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery countComma(String field, String alias);
+    GraphQuery countComma(String field, String alias);
 
     /**
      * 计算属性
@@ -204,7 +204,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery countComma(Class clazz, String field, String alias);
+    GraphQuery countComma(Class clazz, String field, String alias);
 
     /**
      * count条件表达式
@@ -213,7 +213,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery countComma(GraphExpression graphExpression, String alias);
+    GraphQuery countComma(GraphExpression graphExpression, String alias);
 
 
     /**
@@ -223,7 +223,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery count(String field, String alias);
+    GraphQuery count(String field, String alias);
 
 
     /**
@@ -232,7 +232,7 @@ public interface GraphQuery {
      * @param fieldAlias 字段与别名map
      * @return 查询API
      */
-    public GraphQuery count(Map<String, String> fieldAlias);
+    GraphQuery count(Map<String, String> fieldAlias);
 
     /**
      * count(*)
@@ -240,7 +240,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery count(String alias);
+    GraphQuery count(String alias);
 
     /**
      * 计算属性
@@ -250,7 +250,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery count(Class clazz, String field, String alias);
+    GraphQuery count(Class clazz, String field, String alias);
 
 
     /**
@@ -260,7 +260,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery count(GraphExpression graphExpression, String alias);
+    GraphQuery count(GraphExpression graphExpression, String alias);
 
     /**
      * avg条件表达式
@@ -269,7 +269,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avg(GraphExpression graphExpression, String alias);
+    GraphQuery avg(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值
@@ -278,7 +278,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avg(String field, String alias);
+    GraphQuery avg(String field, String alias);
 
     /**
      * 某个字段的平均值
@@ -288,7 +288,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avg(Class clazz, String field, String alias);
+    GraphQuery avg(Class clazz, String field, String alias);
 
     /**
      * avgComma条件表达式
@@ -297,7 +297,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avgComma(GraphExpression graphExpression, String alias);
+    GraphQuery avgComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -306,7 +306,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avgComma(String field, String alias);
+    GraphQuery avgComma(String field, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -316,7 +316,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery avgComma(Class clazz, String field, String alias);
+    GraphQuery avgComma(Class clazz, String field, String alias);
 
     /**
      * sum条件表达式
@@ -325,7 +325,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sum(GraphExpression graphExpression, String alias);
+    GraphQuery sum(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和
@@ -334,7 +334,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sum(String field, String alias);
+    GraphQuery sum(String field, String alias);
 
     /**
      * 某个字段的求和
@@ -344,7 +344,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sum(Class clazz, String field, String alias);
+    GraphQuery sum(Class clazz, String field, String alias);
 
     /**
      * sumComma条件表达式
@@ -353,7 +353,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sumComma(GraphExpression graphExpression, String alias);
+    GraphQuery sumComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -362,7 +362,7 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sumComma(String field, String alias);
+    GraphQuery sumComma(String field, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -372,14 +372,14 @@ public interface GraphQuery {
      * @param alias 别名
      * @return 查询API
      */
-    public GraphQuery sumComma(Class clazz, String field, String alias);
+    GraphQuery sumComma(Class clazz, String field, String alias);
 
     /**
      * 逗号分隔
      *
      * @return 查询API
      */
-    public GraphQuery comma();
+    GraphQuery comma();
 
     /**
      * 条件过滤
@@ -387,7 +387,7 @@ public interface GraphQuery {
      * @param graphCondition 表达式
      * @return 查询API
      */
-    public GraphQuery where(GraphCondition graphCondition);
+    GraphQuery where(GraphCondition graphCondition);
 
 
 }

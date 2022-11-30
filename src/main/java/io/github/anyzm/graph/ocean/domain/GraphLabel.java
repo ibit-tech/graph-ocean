@@ -24,35 +24,35 @@ public interface GraphLabel {
      *
      * @return 是否顶点tag
      */
-    public boolean isTag();
+    boolean isTag();
 
     /**
      * 是否关系(边)
      *
      * @return 是否边
      */
-    public boolean isEdge();
+    boolean isEdge();
 
     /**
      * 获取标签名称
      *
      * @return 标签名
      */
-    public String getName();
+    String getName();
 
     /**
      * 获取必要字段
      *
      * @return 必须字段
      */
-    public List<String> getMustFields();
+    List<String> getMustFields();
 
     /**
      * 获取所有字段
      *
      * @return 所有字段名
      */
-    public Collection<String> getAllFields();
+    Collection<String> getAllFields();
 
     /**
      * 格式化属性值
@@ -61,7 +61,7 @@ public interface GraphLabel {
      * @param originalValue 原始值
      * @return 格式化后的值
      */
-    public Object formatValue(String field, Object originalValue);
+    Object formatValue(String field, Object originalValue);
 
     /**
      * 反转格式化属性值
@@ -70,7 +70,7 @@ public interface GraphLabel {
      * @param databaseValue 数据库的值
      * @return 反格式化后的值
      */
-    public Object reformatValue(String field, Object databaseValue);
+    Object reformatValue(String field, Object databaseValue);
 
     /**
      * 获取字段名
@@ -78,7 +78,7 @@ public interface GraphLabel {
      * @param property 属性
      * @return 字段名
      */
-    public String getFieldName(String property);
+    String getFieldName(String property);
 
     /**
      * 获取属性名
@@ -86,7 +86,7 @@ public interface GraphLabel {
      * @param field  字段
      * @return 属性名
      */
-    public String getPropertyName(String field);
+    String getPropertyName(String field);
 
     /**
      * 获取字段的数据类型
@@ -94,6 +94,6 @@ public interface GraphLabel {
      * @param field 字段
      * @return 数据类型
      */
-    public GraphDataTypeEnum getFieldDataType(String field);
+    GraphDataTypeEnum getFieldDataType(String field);
 
 }

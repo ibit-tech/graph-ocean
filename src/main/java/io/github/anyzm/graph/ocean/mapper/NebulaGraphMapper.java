@@ -34,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Description  NebulaGraphMapper is used for
@@ -54,9 +53,9 @@ public class NebulaGraphMapper implements GraphMapper {
     @Getter
     private NebulaPoolSessionManager nebulaPoolSessionManager;
 
-    private GraphUpdateEdgeEngineFactory graphUpdateEdgeEngineFactory;
+    private final GraphUpdateEdgeEngineFactory graphUpdateEdgeEngineFactory;
 
-    private GraphUpdateVertexEngineFactory graphUpdateVertexEngineFactory;
+    private final GraphUpdateVertexEngineFactory graphUpdateVertexEngineFactory;
 
     @Setter
     @Getter
@@ -66,7 +65,7 @@ public class NebulaGraphMapper implements GraphMapper {
 
     private GraphEdgeEntityFactory graphEdgeEntityFactory;
 
-    private GraphTypeManager graphTypeManager;
+    private final GraphTypeManager graphTypeManager;
 
     private void init() {
         this.graphVertexEntityFactory = new DefaultGraphVertexEntityFactory(graphTypeManager);
@@ -98,14 +97,18 @@ public class NebulaGraphMapper implements GraphMapper {
         init();
     }
 
-    private <T> int batchUpdateVertex(List<GraphVertexEntity<T>> graphVertexEntityList) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
-        VertexUpdateEngine build = this.graphUpdateVertexEngineFactory.build(graphVertexEntityList);
+    private <T> int batchUpdateVertex(List<GraphVertexEntity<T>> graphVertexEntityList)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
+        VertexUpdateEngine<T> build = this.graphUpdateVertexEngineFactory.build(graphVertexEntityList);
         List<String> sqlList = build.getSqlList();
         return executeBatchUpdateSql(space, sqlList);
     }
 
     @Override
-    public <T> int saveVertexEntities(List<T> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    public <T> int saveVertexEntities(List<T> entities)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         if (CollectionUtils.isEmpty(entities)) {
             return 0;
         }
@@ -119,7 +122,9 @@ public class NebulaGraphMapper implements GraphMapper {
         return batchUpdateVertex(vertexEntities);
     }
 
-    private <S, T, E> int batchUpdateEdge(List<GraphEdgeEntity<S, T, E>> graphEdgeEntities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    private <S, T, E> int batchUpdateEdge(List<GraphEdgeEntity<S, T, E>> graphEdgeEntities)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         EdgeUpdateEngine<S, T, E> build = this.graphUpdateEdgeEngineFactory.build(graphEdgeEntities);
         List<String> sqlList = build.getSqlList();
         return executeBatchUpdateSql(space, sqlList);
@@ -127,7 +132,9 @@ public class NebulaGraphMapper implements GraphMapper {
 
     @Override
     public <S, T, E> int saveEdgeEntitiesWithVertex(List<E> entities, Function<String, S> srcVertexEntityFunction,
-                                                    Function<String, T> dstVertexEntityFunction) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+                                                    Function<String, T> dstVertexEntityFunction)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         if (CollectionUtils.isEmpty(entities)) {
             return 0;
         }
@@ -139,8 +146,8 @@ public class NebulaGraphMapper implements GraphMapper {
             log.debug("构造对象entity={},graphEdgeEntity={}", entity, graphEdgeEntity);
             S srcEntity = srcVertexEntityFunction.apply(graphEdgeEntity.getSrcId());
             T dstEntity = dstVertexEntityFunction.apply(graphEdgeEntity.getDstId());
-            GraphVertexEntity<S> srcVertexEntity = (GraphVertexEntity<S>) graphVertexEntityFactory.buildGraphVertexEntity(srcEntity);
-            GraphVertexEntity<T> dstVertexEntity = (GraphVertexEntity<T>) graphVertexEntityFactory.buildGraphVertexEntity(dstEntity);
+            GraphVertexEntity<S> srcVertexEntity = graphVertexEntityFactory.buildGraphVertexEntity(srcEntity);
+            GraphVertexEntity<T> dstVertexEntity = graphVertexEntityFactory.buildGraphVertexEntity(dstEntity);
             srcGraphVertexEntities.add(srcVertexEntity);
             dstGraphVertexEntities.add(dstVertexEntity);
             graphEdgeEntities.add(graphEdgeEntity);
@@ -149,7 +156,9 @@ public class NebulaGraphMapper implements GraphMapper {
     }
 
     @Override
-    public <S, T, E> int saveEdgeEntities(List<E> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    public <S, T, E> int saveEdgeEntities(List<E> entities)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         if (CollectionUtils.isEmpty(entities)) {
             return 0;
         }
@@ -164,7 +173,9 @@ public class NebulaGraphMapper implements GraphMapper {
 
     private <S, T, E> int batchUpdateEdgeWithVertex(List<GraphEdgeEntity<S, T, E>> graphEdgeEntities,
                                                     List<GraphVertexEntity<S>> srcGraphVertexEntities,
-                                                    List<GraphVertexEntity<T>> graphVertexEntities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+                                                    List<GraphVertexEntity<T>> graphVertexEntities)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         EdgeUpdateEngine<S, T, E> build = this.graphUpdateEdgeEngineFactory.build(graphEdgeEntities,
                 srcGraphVertexEntities, graphVertexEntities);
         List<String> sqlList = build.getSqlList();
@@ -172,13 +183,16 @@ public class NebulaGraphMapper implements GraphMapper {
     }
 
     @Override
-    public int executeBatchUpdateSql(String space, List<String> sqlList) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    public int executeBatchUpdateSql(String space, List<String> sqlList)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         for (int i = 0; i < sqlList.size(); i += BATCH_SIZE) {
             List<String> sqls = sqlList.subList(i, Math.min(sqlList.size(), i + BATCH_SIZE));
-            String sql = sqls.stream().collect(Collectors.joining(";"));
+            String sql = String.join(";", sqls);
             NebulaSessionWrapper session = null;
             try {
                 session = nebulaPoolSessionManager.getSession();
+                // TODO xiaobenma020 待修改地方
                 int execute = session.execute(String.format(SQL, space, sql));
                 CheckThrower.ifTrueThrow(execute != 0, ErrorEnum.UPDATE_NEBULA_EROR);
             } finally {
@@ -191,10 +205,13 @@ public class NebulaGraphMapper implements GraphMapper {
     }
 
     @Override
-    public int executeUpdateSql(String space, String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException {
+    public int executeUpdateSql(String space, String sql)
+            throws NebulaException, NotValidConnectionException,
+            IOErrorException, ClientServerIncompatibleException, AuthFailedException {
         NebulaSessionWrapper session = null;
         try {
             session = nebulaPoolSessionManager.getSession();
+            // TODO xiaobenma020 待修改地方
             return session.execute(String.format(SQL, space, sql));
         } finally {
             if (session != null) {
@@ -204,20 +221,27 @@ public class NebulaGraphMapper implements GraphMapper {
     }
 
     @Override
-    public int executeUpdateSql(String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException {
+    public int executeUpdateSql(String sql)
+            throws NebulaException, NotValidConnectionException,
+            IOErrorException, ClientServerIncompatibleException, AuthFailedException {
         return executeUpdateSql(this.space, sql);
     }
 
     @Override
-    public QueryResult executeQuerySql(String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    public QueryResult executeQuerySql(String sql)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         return executeQuerySql(this.space, sql);
     }
 
     @Override
-    public QueryResult executeQuerySql(String space, String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+    public QueryResult executeQuerySql(String space, String sql)
+            throws NebulaException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         NebulaSessionWrapper session = null;
         try {
             session = nebulaPoolSessionManager.getSession();
+            // todo 待修改地方
             return session.executeQueryDefined(String.format(SQL, space, sql));
         } finally {
             if (session != null) {
@@ -228,7 +252,9 @@ public class NebulaGraphMapper implements GraphMapper {
 
     @Override
     public <T> List<T> executeQuerySql(String sql, Class<T> clazz) throws
-            NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+            NebulaException, IllegalAccessException, InstantiationException,
+            UnsupportedEncodingException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         QueryResult result = executeQuerySql(sql);
         GraphLabel graphLabel = graphTypeManager.getGraphLabel(clazz);
         return result.getEntities(graphLabel, clazz);
@@ -261,16 +287,20 @@ public class NebulaGraphMapper implements GraphMapper {
 
     @Override
     public <T> List<T> goReverseEdge(Class<T> edgeClazz, String... vertexIds) throws
-            UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+            UnsupportedEncodingException, IllegalAccessException,
+            InstantiationException, ClientServerIncompatibleException,
+            AuthFailedException, NotValidConnectionException, IOErrorException {
         GraphEdgeType<Object, Object, T> graphEdgeType = graphTypeManager.getGraphEdgeType(edgeClazz);
         String[] fieldsName = CollectionUtils.toStringArray(graphEdgeType.getAllFields());
-        EdgeQuery query = NebulaEdgeQuery.build().goFrom(edgeClazz, EdgeDirectionEnum.REVERSELY, vertexIds).yield(edgeClazz, fieldsName);
+        EdgeQuery query = NebulaEdgeQuery.build().goFrom(edgeClazz
+                , EdgeDirectionEnum.REVERSELY, vertexIds).yield(edgeClazz, fieldsName);
         return executeQuery(query, edgeClazz);
     }
 
     @Override
     public <T> List<T> fetchVertexTag(Class<T> vertexClazz, String... vertexIds) throws
-            UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
+            UnsupportedEncodingException, IllegalAccessException, InstantiationException,
+            ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
         GraphVertexType<T> graphVertexType = graphTypeManager.getGraphVertexType(vertexClazz);
         String[] fieldsName = CollectionUtils.toStringArray(graphVertexType.getAllFields());
         VertexQuery query = NebulaVertexQuery.build().fetchPropOn(vertexClazz, vertexIds).yield(vertexClazz, fieldsName);

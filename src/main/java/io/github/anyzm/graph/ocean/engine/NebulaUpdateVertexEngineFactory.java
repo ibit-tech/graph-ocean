@@ -23,7 +23,7 @@ import java.util.List;
 public class NebulaUpdateVertexEngineFactory implements GraphUpdateVertexEngineFactory {
 
     @Override
-    public <T> VertexUpdateEngine build(List<GraphVertexEntity<T>> graphVertexEntities) throws NebulaException {
+    public <T> VertexUpdateEngine<T> build(List<GraphVertexEntity<T>> graphVertexEntities) throws NebulaException {
         return new NebulaBatchVertexUpdate<>(graphVertexEntities);
     }
 

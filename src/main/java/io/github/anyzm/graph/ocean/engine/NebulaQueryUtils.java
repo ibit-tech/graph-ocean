@@ -26,32 +26,35 @@ import java.util.Map;
  */
 public class NebulaQueryUtils {
 
-    public static void appendVertexSrcId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, String... vertexIds) {
+    public static void appendVertexSrcId(GraphEdgeType<?, ?, ?> graphEdgeType
+            , StringBuilder sqlBuilder, String... vertexIds) {
         for (String vertexId : vertexIds) {
             String vertexIdKey = GraphHelper.getQuerySrcId(graphEdgeType, vertexId);
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }
 
-    public static void appendVertexDstId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, String... vertexIds) {
+    public static void appendVertexDstId(GraphEdgeType<?, ?, ?> graphEdgeType, StringBuilder sqlBuilder, String... vertexIds) {
         for (String vertexId : vertexIds) {
             String vertexIdKey = GraphHelper.getQueryDstId(graphEdgeType, vertexId);
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }
 
-    public static void appendVertexId(GraphVertexType graphVertexType, StringBuilder sqlBuilder, String... vertexIds) {
+    public static void appendVertexId(GraphVertexType<?> graphVertexType, StringBuilder sqlBuilder, String... vertexIds) {
         for (String vertexId : vertexIds) {
             String vertexIdKey = GraphHelper.getQueryId(graphVertexType, vertexId);
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }
 
-    public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder, Class clazz, String... fields) {
+    public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder
+            , Class<?> clazz, String... fields) {
         yield(graphTypeManager, sqlBuilder, null, clazz, fields);
     }
 
-    public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder, String symbol, Class clazz, String... fields) {
+    public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder, String symbol
+            , Class<?> clazz, String... fields) {
         yieldWithDistinct(false, graphTypeManager, sqlBuilder, symbol, clazz, fields);
     }
 

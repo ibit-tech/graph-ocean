@@ -25,7 +25,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param vertexIds 顶点id
      * @return 查询API
      */
-    public EdgeQuery goFrom(Class clazz, String... vertexIds);
+    EdgeQuery goFrom(Class clazz, String... vertexIds);
 
     /**
      * 根据方向,检索哪些顶点id的边l
@@ -35,7 +35,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param vertexIds 顶点id
      * @return 查询API
      */
-    public EdgeQuery goFrom(Class clazz, EdgeDirectionEnum directionEnum, String... vertexIds);
+    EdgeQuery goFrom(Class clazz, EdgeDirectionEnum directionEnum, String... vertexIds);
 
     /**
      * 正向查询边steps步
@@ -45,7 +45,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param steps 跳数
      * @return 查询API
      */
-    public EdgeQuery goFromSteps(Class clazz, int steps, String... vertexIds);
+    EdgeQuery goFromSteps(Class clazz, int steps, String... vertexIds);
 
     /**
      * 正向查询边：fromSteps-toSteps步之内
@@ -56,7 +56,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param toSteps 到几跳
      * @return 查询API
      */
-    public EdgeQuery goFromSteps(Class clazz, int fromSteps, int toSteps, String... vertexIds);
+    EdgeQuery goFromSteps(Class clazz, int fromSteps, int toSteps, String... vertexIds);
 
 
     /**
@@ -68,7 +68,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param steps 跳数
      * @return 查询API
      */
-    public EdgeQuery goFromSteps(Class clazz, EdgeDirectionEnum directionEnum, int steps, String... vertexIds);
+    EdgeQuery goFromSteps(Class clazz, EdgeDirectionEnum directionEnum, int steps, String... vertexIds);
 
     /**
      * 根据方向,检索顶点id的fromSteps - toSteps跳步内的边
@@ -80,7 +80,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param toSteps 到几跳
      * @return 查询API
      */
-    public EdgeQuery goFromSteps(Class clazz, EdgeDirectionEnum directionEnum, int fromSteps, int toSteps, String... vertexIds);
+    EdgeQuery goFromSteps(Class clazz, EdgeDirectionEnum directionEnum, int fromSteps, int toSteps, String... vertexIds);
 
 
     /**
@@ -90,7 +90,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery connectAdd(GraphQuery graphQuery);
+    EdgeQuery connectAdd(GraphQuery graphQuery);
 
     /**
      * limit
@@ -99,7 +99,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery limit(int size);
+    EdgeQuery limit(int size);
 
     /**
      * limit
@@ -109,7 +109,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery limit(int offset, int size);
+    EdgeQuery limit(int offset, int size);
 
     /**
      * 去重
@@ -117,7 +117,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询PAI
      */
     @Override
-    public EdgeQuery distinct();
+    EdgeQuery distinct();
 
 
     /**
@@ -126,7 +126,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yield();
+    EdgeQuery yield();
 
 
     /**
@@ -137,7 +137,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yield(Class clazz, String... fields);
+    EdgeQuery yield(Class clazz, String... fields);
 
     /**
      * 查询哪个标签的哪些属性
@@ -148,7 +148,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yield(String symbol, Class clazz, String... fields);
+    EdgeQuery yield(String symbol, Class clazz, String... fields);
 
     /**
      * 查询哪些属性
@@ -157,7 +157,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yield(String... fields);
+    EdgeQuery yield(String... fields);
 
     /**
      * 查询哪些属性
@@ -166,7 +166,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yield(Map<String, String> fieldAlias);
+    EdgeQuery yield(Map<String, String> fieldAlias);
 
 
     /**
@@ -177,7 +177,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yieldDistinct(Class clazz, String... fields);
+    EdgeQuery yieldDistinct(Class clazz, String... fields);
 
     /**
      * 查询哪个标签的哪些属性
@@ -188,7 +188,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yieldDistinct(String prefix, Class clazz, String... fields);
+    EdgeQuery yieldDistinct(String prefix, Class clazz, String... fields);
 
 
     /**
@@ -198,7 +198,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yieldDistinct(String... fields);
+    EdgeQuery yieldDistinct(String... fields);
 
 
     /**
@@ -208,7 +208,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery yieldDistinct(Map<String, String> fieldAlias);
+    EdgeQuery yieldDistinct(Map<String, String> fieldAlias);
 
 
     /**
@@ -217,7 +217,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery pipe();
+    EdgeQuery pipe();
 
     /**
      * 根据某些属性分组查询
@@ -227,7 +227,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery groupBy(Class clazz, String... fields);
+    EdgeQuery groupBy(Class clazz, String... fields);
 
 
     /**
@@ -237,7 +237,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery groupBy(String... fields);
+    EdgeQuery groupBy(String... fields);
 
     /**
      * count(*)
@@ -246,7 +246,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery countComma(String alias);
+    EdgeQuery countComma(String alias);
 
     /**
      * 对某字段计数并取别名
@@ -256,7 +256,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery countComma(String field, String alias);
+    EdgeQuery countComma(String field, String alias);
 
     /**
      * 计算属性
@@ -267,7 +267,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery countComma(Class clazz, String field, String alias);
+    EdgeQuery countComma(Class clazz, String field, String alias);
 
     /**
      * count条件表达式
@@ -277,7 +277,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery countComma(GraphExpression graphExpression, String alias);
+    EdgeQuery countComma(GraphExpression graphExpression, String alias);
 
 
     /**
@@ -288,7 +288,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery count(String field, String alias);
+    EdgeQuery count(String field, String alias);
 
     /**
      * 对某些字段计数并取别名
@@ -297,7 +297,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery count(Map<String, String> fieldAlias);
+    EdgeQuery count(Map<String, String> fieldAlias);
 
     /**
      * count(*)
@@ -306,7 +306,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery count(String alias);
+    EdgeQuery count(String alias);
 
     /**
      * 计算属性
@@ -317,7 +317,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery count(Class clazz, String field, String alias);
+    EdgeQuery count(Class clazz, String field, String alias);
 
 
     /**
@@ -328,7 +328,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery count(GraphExpression graphExpression, String alias);
+    EdgeQuery count(GraphExpression graphExpression, String alias);
 
     /**
      * avg条件表达式
@@ -338,7 +338,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avg(GraphExpression graphExpression, String alias);
+    EdgeQuery avg(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值
@@ -348,7 +348,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avg(String field, String alias);
+    EdgeQuery avg(String field, String alias);
 
     /**
      * 某个字段的平均值
@@ -359,7 +359,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avg(Class clazz, String field, String alias);
+    EdgeQuery avg(Class clazz, String field, String alias);
 
     /**
      * avgComma条件表达式
@@ -369,7 +369,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avgComma(GraphExpression graphExpression, String alias);
+    EdgeQuery avgComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -379,7 +379,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avgComma(String field, String alias);
+    EdgeQuery avgComma(String field, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -390,7 +390,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery avgComma(Class clazz, String field, String alias);
+    EdgeQuery avgComma(Class clazz, String field, String alias);
 
     /**
      * sum条件表达式
@@ -400,7 +400,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sum(GraphExpression graphExpression, String alias);
+    EdgeQuery sum(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和
@@ -410,7 +410,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sum(String field, String alias);
+    EdgeQuery sum(String field, String alias);
 
     /**
      * 某个字段的求和
@@ -421,7 +421,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sum(Class clazz, String field, String alias);
+    EdgeQuery sum(Class clazz, String field, String alias);
 
     /**
      * sumComma条件表达式
@@ -431,7 +431,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sumComma(GraphExpression graphExpression, String alias);
+    EdgeQuery sumComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -441,7 +441,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sumComma(String field, String alias);
+    EdgeQuery sumComma(String field, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -452,7 +452,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery sumComma(Class clazz, String field, String alias);
+    EdgeQuery sumComma(Class clazz, String field, String alias);
 
 
     /**
@@ -461,7 +461,7 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery comma();
+    EdgeQuery comma();
 
     /**
      * 条件过滤
@@ -470,6 +470,6 @@ public interface EdgeQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public EdgeQuery where(GraphCondition graphCondition);
+    EdgeQuery where(GraphCondition graphCondition);
 
 }

@@ -18,20 +18,20 @@ import java.util.List;
  * Date  2021/7/16 - 17:10
  * @version 1.0.0
  */
-public interface VertexUpdateEngine extends GraphUpdateEngine {
+public interface VertexUpdateEngine<T> extends GraphUpdateEngine {
 
     /**
      * 获取顶点实体
      *
      * @return 顶点实体
      */
-    public <T> List<GraphVertexEntity<T>> getGraphVertexEntityList();
+    List<GraphVertexEntity<T>> getGraphVertexEntityList();
 
     /**
      * 获取顶点类型
      *
      * @return 顶点类型
      */
-    public <T> GraphVertexType<T> getGraphVertexType();
+    GraphVertexType<T> getGraphVertexType();
 
 }

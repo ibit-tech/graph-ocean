@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class FieldUtils {
     //列出所属类的所有属性
-    public static List<Field> listFields(Class clazz) {
+    public static List<Field> listFields(Class<?> clazz) {
         List<Field> fieldsList = new ArrayList<>();
         Class<?> c = clazz;
         while (!Object.class.equals(c)) {  // 遍历所有父类字节码对象

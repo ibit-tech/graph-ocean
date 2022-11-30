@@ -23,7 +23,7 @@ public interface VertexQuery extends GraphQuery {
      * @param vertexIds 顶点id
      * @return 顶点查询API
      */
-    public VertexQuery fetchPropOn(Class clazz, String... vertexIds);
+    VertexQuery fetchPropOn(Class clazz, String... vertexIds);
 
 
     /**
@@ -33,7 +33,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery connectAdd(GraphQuery graphQuery);
+    VertexQuery connectAdd(GraphQuery graphQuery);
 
     /**
      * limit
@@ -42,7 +42,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery limit(int size);
+    VertexQuery limit(int size);
 
     /**
      * limit
@@ -52,7 +52,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery limit(int offset, int size);
+    VertexQuery limit(int offset, int size);
 
     /**
      * 查询哪个标签的哪些属性
@@ -62,7 +62,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yield(Class clazz, String... fields);
+    VertexQuery yield(Class clazz, String... fields);
 
     /**
      * 去重
@@ -70,7 +70,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery distinct();
+    VertexQuery distinct();
 
     /**
      * 添加yield关键字
@@ -78,7 +78,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yield();
+    VertexQuery yield();
 
 
     /**
@@ -90,7 +90,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yield(String symbol, Class clazz, String... fields);
+    VertexQuery yield(String symbol, Class clazz, String... fields);
 
     /**
      * 查询哪些属性
@@ -99,7 +99,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yield(String... fields);
+    VertexQuery yield(String... fields);
 
 
     /**
@@ -109,7 +109,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yield(Map<String, String> fieldAlias);
+    VertexQuery yield(Map<String, String> fieldAlias);
 
     /**
      * 查询哪个标签的哪些属性
@@ -119,7 +119,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yieldDistinct(Class clazz, String... fields);
+    VertexQuery yieldDistinct(Class clazz, String... fields);
 
 
     /**
@@ -131,7 +131,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yieldDistinct(String prefix, Class clazz, String... fields);
+    VertexQuery yieldDistinct(String prefix, Class clazz, String... fields);
 
     /**
      * 查询哪些属性
@@ -140,7 +140,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yieldDistinct(String... fields);
+    VertexQuery yieldDistinct(String... fields);
 
 
     /**
@@ -150,7 +150,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery yieldDistinct(Map<String, String> fieldAlias);
+    VertexQuery yieldDistinct(Map<String, String> fieldAlias);
 
     /**
      * 管道分隔符
@@ -158,7 +158,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery pipe();
+    VertexQuery pipe();
 
     /**
      * 根据某些属性分组查询
@@ -168,7 +168,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery groupBy(Class clazz, String... fields);
+    VertexQuery groupBy(Class clazz, String... fields);
 
 
     /**
@@ -178,7 +178,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery groupBy(String... fields);
+    VertexQuery groupBy(String... fields);
 
     /**
      * count(*)
@@ -187,7 +187,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery countComma(String alias);
+    VertexQuery countComma(String alias);
 
     /**
      * 对某字段计数并取别名
@@ -197,7 +197,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery countComma(String field, String alias);
+    VertexQuery countComma(String field, String alias);
 
     /**
      * 计算属性
@@ -208,7 +208,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery countComma(Class clazz, String field, String alias);
+    VertexQuery countComma(Class clazz, String field, String alias);
 
     /**
      * count条件表达式
@@ -218,7 +218,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery countComma(GraphExpression graphExpression, String alias);
+    VertexQuery countComma(GraphExpression graphExpression, String alias);
 
 
     /**
@@ -228,7 +228,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery count(String field, String alias);
+    VertexQuery count(String field, String alias);
 
 
     /**
@@ -237,7 +237,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery count(Map<String, String> fieldAlias);
+    VertexQuery count(Map<String, String> fieldAlias);
 
     /**
      * count(*)
@@ -245,7 +245,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery count(String alias);
+    VertexQuery count(String alias);
 
     /**
      * 计算属性
@@ -255,7 +255,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery count(Class clazz, String field, String alias);
+    VertexQuery count(Class clazz, String field, String alias);
 
     /**
      * count条件表达式
@@ -264,7 +264,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery count(GraphExpression graphExpression, String alias);
+    VertexQuery count(GraphExpression graphExpression, String alias);
 
     /**
      * avg条件表达式
@@ -273,7 +273,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avg(GraphExpression graphExpression, String alias);
+    VertexQuery avg(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值
@@ -282,7 +282,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avg(String field, String alias);
+    VertexQuery avg(String field, String alias);
 
     /**
      * 某个字段的平均值
@@ -292,7 +292,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avg(Class clazz, String field, String alias);
+    VertexQuery avg(Class clazz, String field, String alias);
 
     /**
      * avgComma条件表达式
@@ -301,7 +301,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avgComma(GraphExpression graphExpression, String alias);
+    VertexQuery avgComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -310,7 +310,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avgComma(String field, String alias);
+    VertexQuery avgComma(String field, String alias);
 
     /**
      * 某个字段的平均值，并且逗号分割
@@ -320,7 +320,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery avgComma(Class clazz, String field, String alias);
+    VertexQuery avgComma(Class clazz, String field, String alias);
 
     /**
      * sum条件表达式
@@ -329,7 +329,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sum(GraphExpression graphExpression, String alias);
+    VertexQuery sum(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和
@@ -338,7 +338,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sum(String field, String alias);
+    VertexQuery sum(String field, String alias);
 
     /**
      * 某个字段的求和
@@ -348,7 +348,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sum(Class clazz, String field, String alias);
+    VertexQuery sum(Class clazz, String field, String alias);
 
     /**
      * sumComma条件表达式
@@ -357,7 +357,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sumComma(GraphExpression graphExpression, String alias);
+    VertexQuery sumComma(GraphExpression graphExpression, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -366,7 +366,7 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sumComma(String field, String alias);
+    VertexQuery sumComma(String field, String alias);
 
     /**
      * 某个字段的求和，并且逗号分割
@@ -376,14 +376,14 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery sumComma(Class clazz, String field, String alias);
+    VertexQuery sumComma(Class clazz, String field, String alias);
 
     /**
      * 逗号分隔
      * @return 查询API
      */
     @Override
-    public VertexQuery comma();
+    VertexQuery comma();
 
     /**
      *
@@ -391,6 +391,6 @@ public interface VertexQuery extends GraphQuery {
      * @return 查询API
      */
     @Override
-    public VertexQuery where(GraphCondition graphCondition);
+    VertexQuery where(GraphCondition graphCondition);
 
 }

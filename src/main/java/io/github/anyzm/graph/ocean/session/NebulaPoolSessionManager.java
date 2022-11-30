@@ -38,17 +38,22 @@ public class NebulaPoolSessionManager {
         this.reconnect = reconnect;
     }
 
-    public NebulaSessionWrapper getSession() throws NotValidConnectionException, IOErrorException, AuthFailedException, NebulaException, ClientServerIncompatibleException {
-        NebulaSessionWrapper nebulaSessionWrapper = new NebulaSessionWrapper(this.nebulaPool.getSession(this.userName, this.password, this.reconnect));
-        return nebulaSessionWrapper;
+    public NebulaSessionWrapper getSession()
+            throws NotValidConnectionException, IOErrorException,
+            AuthFailedException, NebulaException, ClientServerIncompatibleException {
+        return new NebulaSessionWrapper(
+                this.nebulaPool.getSession(this.userName, this.password, this.reconnect)
+        );
     }
 
-    public NebulaSessionWrapper getSession(String userName, String password, boolean reconnect) throws NotValidConnectionException,
+    public NebulaSessionWrapper getSession(String userName, String password, boolean reconnect)
+            throws NotValidConnectionException,
             IOErrorException, AuthFailedException, NebulaException, ClientServerIncompatibleException {
         return new NebulaSessionWrapper(this.nebulaPool.getSession(userName, password, reconnect));
     }
 
-    public NebulaSessionWrapper getSession(boolean reconnect) throws NotValidConnectionException,
+    public NebulaSessionWrapper getSession(boolean reconnect)
+            throws NotValidConnectionException,
             IOErrorException, AuthFailedException, NebulaException, ClientServerIncompatibleException {
         return new NebulaSessionWrapper(this.nebulaPool.getSession(this.userName, this.password, reconnect));
     }

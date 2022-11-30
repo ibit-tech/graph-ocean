@@ -19,6 +19,6 @@ public interface GraphExpression {
      *
      * @return sql
      */
-    public String buildSql();
+    String buildSql();
 
 }

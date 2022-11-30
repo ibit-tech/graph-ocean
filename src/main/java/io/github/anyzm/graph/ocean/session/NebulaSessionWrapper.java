@@ -16,6 +16,7 @@ import io.github.anyzm.graph.ocean.exception.NebulaExecuteException;
 import io.github.anyzm.graph.ocean.exception.NebulaVersionConflictException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,13 +27,13 @@ import java.util.stream.IntStream;
  * Date  2021/7/15 - 16:49
  * nebula-session包装类，区别读写执行，加强返回结果的封装
  * @version 1.0.0
- * @update chenui
+ * @update chenui,xiaobenma020
  * @date 2022/08/31
  */
 @Slf4j
-public class NebulaSessionWrapper implements NebulaSession {
+public class NebulaSessionWrapper implements io.github.anyzm.graph.ocean.domain.Session {
 
-    private Session session;
+    private final Session session;
 
     private static final String E_DATA_CONFLICT_ERROR = "E_DATA_CONFLICT_ERROR";
 
@@ -42,10 +43,12 @@ public class NebulaSessionWrapper implements NebulaSession {
     }
 
     @Override
-    public int execute(String statement) throws NebulaExecuteException {
-        ResultSet resultSet = null;
+    public int executeWithParameter(String statement, Map<String, Object> paramMap) throws NebulaExecuteException {
+        ResultSet resultSet;
         try {
-            log.debug("execute执行nebula,ngql={}", statement);
+            if (log.isDebugEnabled()) {
+                log.debug("execute执行nebula, nGql: {}, paramMap: {}", statement, paramMap);
+            }
             resultSet = this.session.execute(statement);
         } catch (Exception e) {
             log.error("更新nebula异常 Thrift rpc call failed: {}", e.getMessage());
@@ -59,37 +62,41 @@ public class NebulaSessionWrapper implements NebulaSession {
             //版本冲突，session内部不再打印错误日志，直接抛出自定义的版本异常
             throw new NebulaVersionConflictException(resultSet.getErrorCode(), resultSet.getErrorMessage());
         }
-        log.error("更新nebula异常 code:{}, msg:{}, nGql:{} ",
-                resultSet.getErrorCode(), resultSet.getErrorMessage(), statement);
+        log.error("更新nebula异常 code:{}, msg:{}, nGql:{}, paramMap: {} ",
+                resultSet.getErrorCode(), resultSet.getErrorMessage(), statement, paramMap);
         throw new NebulaExecuteException(resultSet.getErrorCode(), resultSet.getErrorMessage());
     }
 
     @Override
-    public ResultSet executeQuery(String statement) throws NebulaExecuteException {
-        ResultSet resultSet = null;
+    public ResultSet executeQueryWithParameter(String statement, Map<String, Object> paramMap)
+            throws NebulaExecuteException {
+        ResultSet resultSet;
         try {
-            log.debug("executeQuery执行nebula,ngql={}", statement);
-            resultSet = this.session.execute(statement);
+            log.debug("executeQuery执行nebula,nGql: {}, paramMap: {}", statement, paramMap);
+            resultSet = this.session.executeWithParameter(statement, paramMap);
 
         } catch (Exception e) {
-            log.error("查询nebula异常 code:{}, msg:{}, nGql:{} ", ErrorCode.E_RPC_FAILURE, e.getMessage(), statement);
+            log.error("查询nebula异常 code: {}, msg: {}, nGql: {}, paramMap: {} "
+                    , ErrorCode.E_RPC_FAILURE, e.getMessage(), statement, paramMap);
             throw new NebulaExecuteException(ErrorEnum.QUERY_NEBULA_EROR, e);
         }
         if (resultSet != null && resultSet.getErrorCode() != ErrorCode.SUCCEEDED.getValue()) {
-            log.error("查询nebula异常:{},{},nGql:{}", resultSet.getErrorCode(), resultSet.getErrorMessage(), statement);
+            log.error("查询nebula异常: {}, {}, nGql: {}", resultSet.getErrorCode(), resultSet.getErrorMessage(), statement);
             throw new NebulaExecuteException(ErrorEnum.QUERY_NEBULA_EROR);
         }
         return resultSet;
     }
 
     @Override
-    public QueryResult executeQueryDefined(String statement) throws NebulaExecuteException {
-        ResultSet resultSet = executeQuery(statement);
+    public QueryResult executeQueryDefined(String statement
+            , Map<String, Object> paramMap) throws NebulaExecuteException {
+        ResultSet resultSet = executeQueryWithParameter(statement, paramMap);
         if (!resultSet.isSucceeded()) {
-            log.warn("executeQueryDefined execute fail,sql:" + statement);
+            log.warn("executeQueryDefined execute fail, nGql: {}, paramMap: {}", statement, paramMap);
             return new QueryResult();
         }
-        return new QueryResult(IntStream.range(0, resultSet.rowsSize()).mapToObj(i -> resultSet.rowValues(i)).collect(Collectors.toList()));
+        return new QueryResult(IntStream.range(0, resultSet.rowsSize())
+                .mapToObj(resultSet::rowValues).collect(Collectors.toList()));
     }
 
     @Override

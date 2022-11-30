@@ -30,7 +30,7 @@ public class NebulaEdgeQuery implements EdgeQuery {
     @Setter
     private static GraphTypeManager graphTypeManager;
 
-    private StringBuilder sqlBuilder = new StringBuilder();
+    private final StringBuilder sqlBuilder = new StringBuilder();
 
     private NebulaEdgeQuery() {
     }

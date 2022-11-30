@@ -28,15 +28,15 @@ import java.util.Set;
  * @author Anyzm
  * date 2020/4/13
  */
-public class NebulaBatchVertexUpdate<T> implements VertexUpdateEngine {
+public class NebulaBatchVertexUpdate<T> implements VertexUpdateEngine<T> {
 
     private static final String VERTEX_UPSET_SQL = "UPSERT VERTEX %s SET %s";
 
-    private List<GraphVertexEntity<T>> graphVertexEntities;
+    private final List<GraphVertexEntity<T>> graphVertexEntities;
 
-    private GraphVertexType<T> graphVertexType;
+    private final GraphVertexType<T> graphVertexType;
 
-    private int batchSize;
+    private final int batchSize;
 
 
     /**
@@ -58,14 +58,14 @@ public class NebulaBatchVertexUpdate<T> implements VertexUpdateEngine {
     private List<String> getMultiVertexSql() throws NebulaException {
         // nebula> UPSERT VERTEX 111 SET player.name = "Dwight Howard", player.age = $^.player.age + 11;
         List<String> sqlList = Lists.newArrayListWithExpectedSize(batchSize);
-        for (GraphVertexEntity graphVertexEntity : this.graphVertexEntities) {
+        for (GraphVertexEntity<T> graphVertexEntity : this.graphVertexEntities) {
             String sql = generateUpsetSql(graphVertexEntity);
             sqlList.add(sql);
         }
         return StringUtil.aggregate(sqlList, batchSize, ";");
     }
 
-    private String generateUpsetSql(GraphVertexEntity graphVertexEntity) throws NebulaException {
+    private String generateUpsetSql(GraphVertexEntity<T> graphVertexEntity) throws NebulaException {
         Set<Map.Entry<String, Object>> entries = graphVertexEntity.getProps().entrySet();
         String queryId = GraphHelper.getQueryId(this.graphVertexType, graphVertexEntity.getId());
         StringBuilder builder = new StringBuilder();

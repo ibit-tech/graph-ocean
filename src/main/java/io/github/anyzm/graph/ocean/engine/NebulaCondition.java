@@ -31,7 +31,7 @@ public class NebulaCondition implements GraphCondition {
     private NebulaCondition() {
     }
 
-    private StringBuilder conditionBuilder = new StringBuilder();
+    private final StringBuilder conditionBuilder = new StringBuilder();
 
     public static NebulaCondition build() {
         return new NebulaCondition();
